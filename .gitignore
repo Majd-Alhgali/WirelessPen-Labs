@@ -17,3 +17,6 @@
 *.swp
 *.bak
 Exam-Attacks/evil-twin-lab/logs/*.log
+Exam-Attacks/PSK-offline-lab/*.potfile
+Exam-Attacks/PSK-offline-lab/results/*
+Exam-Attacks/PSK-offline-lab/logs/*
