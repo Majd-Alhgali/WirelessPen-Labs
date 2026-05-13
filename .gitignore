@@ -1,0 +1,19 @@
+# Raw wireless captures and derived cracking material
+*.cap
+*.pcap
+*.pcapng
+*.22000
+*.hc22000
+*.hccapx
+
+# Sensitive local material
+*.key
+*.pem
+*.env
+.env
+
+# Runtime/output noise
+*.tmp
+*.swp
+*.bak
+Exam-Attacks/evil-twin-lab/logs/*.log

